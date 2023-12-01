@@ -35,7 +35,6 @@ d3.json(url).then(function(data) {
 }
 
   populateDropdown();
-//   Plotly.newPlot("#sample-metadata")
 
 })
 .catch(function(error) {
@@ -43,14 +42,15 @@ d3.json(url).then(function(data) {
 }
 );
 
+// this function is called when the dropdown box item is changed
 function optionChanged(selected){
-    console.log('Selected value: ', selected.value)
-    console.log('Selected index: ', selected.selectedIndex)
-    console.log('dataG: ', dataG)
+
+    //Plotting horizontal bar chart
+    // get the index of the id, which is the same index for all other arrays (metadata, names, samples)
+    // in dataG
     index = selected.selectedIndex;
     sample = dataG['samples'][index];
-    // console.log('sample: ', sample);
-    // console.log('otu_ids: ', sample.otu_ids.slice(0,10));
+
     let hbData= [{ 
         // convert the values to string, thick bars are displayed when we use the string template, 
         // reverse() because otherwise the largest sample value is at 
@@ -74,7 +74,9 @@ function optionChanged(selected){
     Plotly.newPlot('bar', hbData, layout)
     
     //fill in demographic info
+    //get the required info from metadata array
     personInfo = dataG['metadata'][index]
+    // convert the object to formatted string using map 
     formattedPI = Object.keys(personInfo).map(key => key + ': ' + personInfo[key] + '<br/>').join('')
     // need to use .html() instead of .text() to display the <br> correctly
     d3.select("#sample-metadata").html(formattedPI)
@@ -96,7 +98,6 @@ function optionChanged(selected){
         xaxis: {title: 'OTU ID'},
         yaxis: {title: 'Sample values'},
     };
-
     Plotly.newPlot('bubble',[trace], layout2);
     
     //BONUS section
@@ -106,11 +107,13 @@ function optionChanged(selected){
     let gaugeData = [{
         type: 'indicator',
         mode: 'gauge+number',
-        title: { text: 'Belly Button Washing Frequency\nScrubs per Week'},
+        title: { text: '<b>Belly Button Washing Frequency</b><br>Scrubs per Week'},
         value: freq,
         domain: {x: [0,1], y: [0,1]},
     }];
-    let layout3 = { width: 600, height: 500, margin:{t: 0, b:0}};
+    
+    let layout3 = { width: 600, height: 500, margin:{t: 0, b:0},
+    };
     Plotly.newPlot('gauge', gaugeData,layout3)
 
 }
