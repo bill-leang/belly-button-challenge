@@ -67,7 +67,7 @@ function optionChanged(selected){
        }
     }];
     let layout ={
-       title: 'Top 10 OTUs',
+       title: '<b>Top 10 OTUs</b>',
        xaxis: {title: 'Sample values'},
     //    yaxis: {title: "OTU ID"},
     };
@@ -94,7 +94,7 @@ function optionChanged(selected){
         text: sample.otu_labels,
     };
     let layout2 = {
-        title: 'All OTU',
+        title: '<b>All OTUs</b>',
         xaxis: {title: 'OTU ID'},
         yaxis: {title: 'Sample values'},
     };
